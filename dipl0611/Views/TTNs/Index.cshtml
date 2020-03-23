@@ -1,0 +1,61 @@
+﻿@model IEnumerable<dipl0611.Models.TTN>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Перечень ТТН</h3>
+
+
+<table id="example" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Наименование поставщика
+            </th>
+            <th>
+               Тип ТТН
+            </th>
+            <th>
+                Дата 
+            </th>
+            <th>
+                Номер
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.kontragents.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.type_TTN.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nomer)
+                </td>
+                <td>
+                    @Html.ActionLink("Просмотреть", "WatchTTN", new { id = item.id }) |
+                    @if (item.type_TTN.id == 2)
+                     {
+                           @Html.ActionLink("Распечатать (.xls)", "PrintTTN", new { id = item.id })
+                     } 
+
+
+
+                    @*@Html.ActionLink("Details", "Details", new { id = item.id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.id })*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,68 @@
+﻿@model IEnumerable<dipl0611.Models.kontragents>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Перечень поставщиков</h3>
+
+
+<table id="example" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Наименование
+            </th>
+            <th>
+               Телефон
+            </th>
+            <th>
+                Адресс
+            </th>
+            <th>
+               Контактное лицо
+            </th>
+            <th>
+                Контактный телефон
+            </th>
+            <th>
+                Номер договора
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.telephone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.adress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.kontact_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.kontact_telephone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dogovor)
+                </td>
+                <td>
+                    @Html.ActionLink("Редактировать", "Edit", new { id = item.id }) 
+                    @*@Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>
+    @Html.ActionLink("Добавить поставщика", "Create")
+</p>

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<dipl0611.Models.products>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Перечень товаров</h3>
+
+
+<table id="example" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Поставщик
+            </th>
+            <th>
+                Наименование
+            </th>
+            <th>
+                Цена
+            </th>
+            <th>
+                Минимальная граница запаса
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.kontragents.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>
+
+            @if (item.lowBorderOrder == null)
+            {
+                <td>Отсутствует</td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.lowBorderOrder)
+                </td>
+            }
+
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.id })
+                @*@Html.ActionLink("Детали", "Details", new { id = item.id }) |*@
+                @*@Html.ActionLink("Удалить", "Delete", new { id = item.id })*@
+            </td>
+        </tr>
+        }
+    </tbody>
+
+</table>
+<p>
+    @Html.ActionLink("Добавить товар", "Create")
+</p>

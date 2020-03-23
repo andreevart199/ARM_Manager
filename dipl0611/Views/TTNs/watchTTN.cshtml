@@ -1,0 +1,52 @@
+﻿@model IEnumerable<dipl0611.Models.operation>
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2></h2>
+
+
+<table id="example" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.products.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TTN.nomer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.count)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+         {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.products.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TTN.nomer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.count)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.id })*@
+                </td>
+            </tr>
+         }
+    </tbody>
+
+</table>
+
+<div>
+    @Html.ActionLink("Назад", "Index")
+</div>

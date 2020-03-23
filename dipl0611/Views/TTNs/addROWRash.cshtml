@@ -1,0 +1,96 @@
+﻿@model IEnumerable<dipl0611.Models.operation>
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2></h2>
+
+
+<table id="example" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.products.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TTN.nomer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.count)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.products.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TTN.nomer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.count)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.id }) |*@
+
+                    @using (Html.BeginForm("Delete", "operations", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" value="@item.id" name="id" />
+
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Удалить" class="btn btn-default" />
+                        </div>
+
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+@*ViewBag.id_kontr*@
+<div>
+    @Html.ActionLink("Добавить новую запись в ТТН", "ModalFormActionRash", "TTNs", new { Id = @ViewBag.idTTN}, new
+    {
+        data_target = "#modal-container",
+        data_toggle = "modal"
+    })
+</div>
+
+<div>
+    @Html.ActionLink("Сохранить и выйти", "Index")
+</div>
+
+@* The normal bootstrap modal with out any content in the modal-content div. Note that the id matches the data_target from the link*@
+<div id="modal-container" class="modal fade hidden-print" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @* The normal bootstrap behavior is to only grab the content for the modal once, if you need to pull in different partial views then the data on the modal will have to be cleared.*@
+    <script type="text/javascript">
+        $(function ()
+        {
+            $('#modal-container').on('hidden.bs.modal', function () {
+                $(this).removeData('bs.modal');
+                $('#modal-container .modal-content').empty();
+            });
+        });
+        @* callback from form modal*@
+        function success()
+        {
+            alert("Success!");
+        }
+    </script>
+}

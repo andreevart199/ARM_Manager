@@ -1,0 +1,99 @@
+﻿@model IEnumerable<dipl0611.Models.kontragents>
+
+
+@{
+    ViewBag.Title = "CreateOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Перечень поставщиков</h2>
+
+<table id="example" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Наименование поставщика
+            </th>
+            <th>
+                Телефон
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.telephone)
+                </td>
+                <td>
+                    <div> 
+                        <button data-toggle="modal" data-id="@item.id" type="button" class="createOrder btn btn-primary btn-sm" data-target="#target">
+                            <i class="fas fa-pencil-alt"></i> Сформировать заказ
+                        </button>
+
+                    </div>
+
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div id="target" class="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Период движения товара</h4>
+            </div>
+
+            <form class="operation-create" method="POST" action="/CreateOrder/generateOrder/">
+                <div class="form-group">
+                    <input class="form-control" onchange="TDate()" required min="2018-01-01" max="2080-01-01" type="date"
+                           placeholder="гггг-мм-дд" id="date1"
+                           name="date1" />
+                    <input class="form-control" required type="date" onchange="TDate()"
+                           placeholder="гггг-мм-дд" id="date2" min="2018-01-01" max="2080-01-01"
+                           name="date2" />
+
+                    <input type="hidden" id="idKontr" name="id" value=""/>
+
+                    @Html.AntiForgeryToken()
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Сформировать</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+</div>
+<script>
+
+
+
+    $(document).ready(function () {
+        $(".createOrder").click(function () {
+            var idKontr = $(this).attr('data-id');
+            $("#idKontr").val(idKontr);
+          
+        });
+    });
+
+    $('#target').modal('hide');
+</script>
+
+

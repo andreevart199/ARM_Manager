@@ -1,0 +1,90 @@
+﻿@model IEnumerable<dipl0611.Models.operation>
+@{
+    ViewBag.Title = "generateOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Движения товара</h2>
+
+
+
+<table id="example" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Наименование
+            </th>
+            <th>
+                Приход
+            </th>
+            <th>
+                Продажи
+            </th>
+            <th>
+                Страховой запас
+            </th>
+            <th>
+                Остатки
+            </th>
+            <th>
+                Рекомендованный заказ
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.list1)
+        {
+        <tr>
+            <td>
+                @item.name
+            </td>
+            <td>
+                @item.приход
+            </td>
+
+            @if (item.продажи < 0)
+            {
+                <td>
+                    @item.продажи
+                </td>
+            }
+            else
+            {
+                <td>
+                    @item.продажи
+                </td>
+            }
+            <td>
+                @item.lowBorderOrder
+            </td>
+
+            <td>
+                @item.остатки
+            </td>
+            @if (item.остатки + 0 - item.lowBorderOrder - item.продажи > 0)
+            {
+                <td>
+                  0
+                </td>
+            }
+            else
+            {
+                <td>
+                    @(item.остатки - item.lowBorderOrder - item.продажи)
+                </td>
+            }
+        </tr>
+        }
+    </tbody>
+</table>
+<script>
+    var table = document.getElementById("example"); 
+    var cells = table.getElementsByTagName("td"); 
+    for (var i = 5; i < cells.length; i = i + 6) {
+        cells[i].innerHTML = Math.abs(cells[i].innerHTML);
+        }
+    
+</script>
+
