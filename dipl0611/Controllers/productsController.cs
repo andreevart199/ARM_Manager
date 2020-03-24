@@ -17,7 +17,7 @@ namespace dipl0611.Controllers
         // GET: products
         public ActionResult Index()
         {
-            var products = db.products.Include(p => p.name);
+            var products = db.products.Include(p => p.lowBorderOrder);
             return View(products.ToList());
         }
 
