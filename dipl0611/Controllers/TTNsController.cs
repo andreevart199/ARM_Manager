@@ -83,7 +83,7 @@ namespace dipl0611.Controllers
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,date,nomer,id_type,id_kontr")] TTN tTN)
+        public ActionResult CreatePrihod([Bind(Include = "id,date,nomer,id_type,id_kontr")] TTN tTN)
         {
             ViewBag.id_TTN = tTN.id;
             if (ModelState.IsValid)

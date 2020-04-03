@@ -38,7 +38,7 @@ namespace dipl0611.Controllers
         // GET: kontragents/Create
         public ActionResult Create()
         {
-            ViewBag.type_kontr_id1 = new SelectList(db.type_kontr, "id", "name_type");
+            ViewBag.type_kontr_id = new SelectList(db.type_kontr, "id", "name_type");
             return View();
         }
 
@@ -55,7 +55,7 @@ namespace dipl0611.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.type_kontr_id = new SelectList(db.type_kontr, "id", "name_type");
             return View(kontragents);
         }
 

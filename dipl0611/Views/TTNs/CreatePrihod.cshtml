@@ -8,7 +8,7 @@
 <h3>Создать ТТН</h3>
 
 
-@using (Html.BeginForm("Create", "TTNs", FormMethod.Post))
+@using (Html.BeginForm("CreatePrihod", "TTNs", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -33,7 +33,7 @@
     </div>
 
 
-    <input type="hidden" value="1" name="id_type" />
+    <input type="hidden" value="7" name="id_type" />
 
     <div class="form-group">
         @Html.LabelFor(model => model.id_kontr, "Контрагент", htmlAttributes: new { @class = "control-label col-md-2" })

@@ -22,7 +22,7 @@ namespace dipl0611.Models
             SqlCommand cmd;
             SqlCommand cmd2;
             SqlCommand cmd3;
-            var con = new SqlConnection(ConfigurationManager.ConnectionStrings["Model"].ConnectionString);
+            var con = new SqlConnection(ConfigurationManager.ConnectionStrings["dipl"].ConnectionString);
             
             con.Open();
             //запрос заполнение строк операций
