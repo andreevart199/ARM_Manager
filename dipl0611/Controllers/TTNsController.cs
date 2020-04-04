@@ -23,10 +23,9 @@ namespace dipl0611.Controllers
         }
         public ActionResult addROW(int? id, int? id_kontr)
         {
-            ViewBag.id_kontr = id_kontr;
-            ViewBag.idTTN = id;
+
+            ViewBag.idTTN = TempData["idTTN"].ToString();
             ViewBag.id_product = new SelectList(db.products.Where(x => x.id_kontr == id_kontr), "id", "name");
-            // var operation = db.operation.Where(o => o.id_ttn == id);
             return View();
         }
 
@@ -90,8 +89,8 @@ namespace dipl0611.Controllers
             {
                 db.TTN.Add(tTN);
                 db.SaveChanges();
-                TempData["Message"] = tTN.id_kontr;
-                return RedirectToAction("addROW", new {id = tTN.id, id_kontr = tTN.id_kontr });
+                TempData["idTTN"] = tTN.id;
+                return RedirectToAction("addROW");
             }
             ViewBag.id_kontr = new SelectList(db.kontragents, "id", "name", tTN.id_kontr);
             ViewBag.id_type = new SelectList(db.type_TTN, "id", "name", tTN.id_type);
@@ -123,5 +122,9 @@ namespace dipl0611.Controllers
             string fileName = "торг12.xls";
             return File(ms, fileTtype, fileName);
         }
+
+
+
+
     }
 }

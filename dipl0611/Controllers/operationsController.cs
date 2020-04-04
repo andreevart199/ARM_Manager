@@ -31,29 +31,47 @@ namespace dipl0611.Controllers
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,id_ttn,id_product,count")] operation operation)
+        public ActionResult Create(List<operation>  operations)
         {
-           
 
+
+            IList<operation> _TableForm = new List<operation>();
+
+            //Loop through the forms
+            for (int i = 0; i <= Request.Form.Count; i++)
+            {
+                var ClientSampleID = Request.Form["ClientSampleID[" + i + "]"];
+                var additionalComments = Request.Form["AdditionalComments[" + i + "]"];
+                var acidStables = Request.Form["AcidStables[" + i + "]"];
+
+                if (!String.IsNullOrEmpty(ClientSampleID))
+                {
+                    _TableForm.Add(new operation {  });
+                }
+            }
             if (ModelState.IsValid)
             {
-                db.operation.Add(operation);
-                db.SaveChanges();
-
-                // return RedirectToAction("addROW", "TTNs", new { id =  operation.id_ttn});
-                
-                ViewBag.id_ttn = operation.id_ttn;
-                try
+                foreach (var operation in operations)
                 {
-                    ViewBag.id_kontr = Int32.Parse(Request.Params["Id_kontr"]);
+                    db.operation.Add(operation);
+                    db.SaveChanges();
                 }
-                catch { return PartialView("CloseModal"); }
+
+                //ViewBag.id_ttn = operation.id_ttn;
+                //try
+                //{
+                //    ViewBag.id_kontr = Int32.Parse(Request.Params["Id_kontr"]);
+                //}
+                //catch
+                //{
+                //    return PartialView("CloseModal");
+                //}
                 
-                return PartialView("CloseModal");
+                //return PartialView("CloseModal");
             }
-            ViewBag.id_product = new SelectList(db.products, "id", "name", operation.id_product);
-            ViewBag.id_ttn = new SelectList(db.TTN, "id", "nomer", operation.id_ttn);
-            return View(operation);
+            //ViewBag.id_product = new SelectList(db.products, "id", "name", operation.id_product);
+            //ViewBag.id_ttn = new SelectList(db.TTN, "id", "nomer", operation.id_ttn);
+            return RedirectToAction("Index", "kontragents"); ;
         }
 
         // GET: products/Delete/5
