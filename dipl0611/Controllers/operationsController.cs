@@ -31,31 +31,21 @@ namespace dipl0611.Controllers
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(List<operation>  operations)
+        public ActionResult Create(operation  operations)
         {
 
 
             IList<operation> _TableForm = new List<operation>();
 
             //Loop through the forms
-            for (int i = 0; i <= Request.Form.Count; i++)
-            {
-                var ClientSampleID = Request.Form["ClientSampleID[" + i + "]"];
-                var additionalComments = Request.Form["AdditionalComments[" + i + "]"];
-                var acidStables = Request.Form["AcidStables[" + i + "]"];
-
-                if (!String.IsNullOrEmpty(ClientSampleID))
-                {
-                    _TableForm.Add(new operation {  });
-                }
-            }
+            for (int i = 0; i <= Request.Form.Count; i++) {}
             if (ModelState.IsValid)
             {
-                foreach (var operation in operations)
-                {
-                    db.operation.Add(operation);
-                    db.SaveChanges();
-                }
+                //foreach (var operation in operations)
+                //{
+                //    db.operation.Add(operation);
+                //    db.SaveChanges();
+                //}
 
                 //ViewBag.id_ttn = operation.id_ttn;
                 //try

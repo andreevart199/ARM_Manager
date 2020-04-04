@@ -24,6 +24,7 @@ namespace dipl0611.Controllers
         public ActionResult addROW(int? id, int? id_kontr)
         {
 
+            ViewBag.countRow = TempData["countRow"];
             ViewBag.idTTN = TempData["idTTN"].ToString();
             ViewBag.id_product = new SelectList(db.products.Where(x => x.id_kontr == id_kontr), "id", "name");
             return View();
@@ -82,13 +83,14 @@ namespace dipl0611.Controllers
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreatePrihod([Bind(Include = "id,date,nomer,id_type,id_kontr")] TTN tTN)
+        public ActionResult CreatePrihod([Bind(Include = "id,date,nomer,id_type,id_kontr, countRow")] TTN tTN, int countRow)
         {
             ViewBag.id_TTN = tTN.id;
             if (ModelState.IsValid)
             {
                 db.TTN.Add(tTN);
                 db.SaveChanges();
+                TempData["countRow"] = countRow;
                 TempData["idTTN"] = tTN.id;
                 return RedirectToAction("addROW");
             }
