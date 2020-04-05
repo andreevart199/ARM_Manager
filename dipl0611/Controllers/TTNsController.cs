@@ -21,18 +21,17 @@ namespace dipl0611.Controllers
             var tTN = db.TTN.Include(t => t.kontragents).Include(t => t.type_TTN);
             return View(tTN.ToList());
         }
-        public ActionResult addROW(int? id, int? id_kontr)
+        public ActionResult addROW()
         {
-
+            int id_kontr = (int) TempData["id_kontr"] ;
             ViewBag.countRow = TempData["countRow"];
             ViewBag.idTTN = TempData["idTTN"].ToString();
-            ViewBag.id_product = new SelectList(db.products.Where(x => x.id_kontr == id_kontr), "id", "name");
+            ViewBag.id_product1 = new SelectList(db.products.Where(x => x.id_kontr == id_kontr), "id", "name");
             return View();
-        }
+        } 
 
         public ActionResult addROWRash(int? id)
         {
-    
             ViewBag.idTTN = id;
             var operation = db.operation.Where(o => o.id_ttn == id);
             return View(operation.ToList());
@@ -63,20 +62,6 @@ namespace dipl0611.Controllers
             return View();
         }
 
-        public ActionResult ModalFormAction(int Id, int Id_kontr)
-        {
-            ViewBag.Id = Id;
-            ViewBag.Id_kontr = Id_kontr;
-            //ViewBag.id_product = new SelectList(db.products.Where(x=>x.id_kontr == Id_kontr), "id", "name");
-            return PartialView("ModalFormContent");
-        }
-
-        public ActionResult ModalFormActionRash(int Id)
-        {
-            ViewBag.Id = Id;
-            ViewBag.id_product = new SelectList(db.products, "id", "name");
-            return PartialView("ModalFormContent");
-        }
 
         // POST: TTNs/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
@@ -90,6 +75,7 @@ namespace dipl0611.Controllers
             {
                 db.TTN.Add(tTN);
                 db.SaveChanges();
+                TempData["id_kontr"] = tTN.id_kontr;
                 TempData["countRow"] = countRow;
                 TempData["idTTN"] = tTN.id;
                 return RedirectToAction("addROW");

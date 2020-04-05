@@ -268,7 +268,6 @@
     <Content Include="Views\TTNs\Index.cshtml" />
     <Content Include="Views\TTNs\addROW.cshtml" />
     <Content Include="Views\TTNs\ModalFormContent.cshtml" />
-    <Content Include="Views\operations\CloseModal.cshtml" />
     <Content Include="Views\CreateOrder\Index.cshtml" />
     <Content Include="Views\CreateOrder\generateOrder.cshtml" />
     <Content Include="Views\createReport\Index.cshtml" />
