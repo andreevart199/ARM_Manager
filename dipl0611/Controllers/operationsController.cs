@@ -33,7 +33,6 @@ namespace dipl0611.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(List<operation> operations)
         {
-
             if (ModelState.IsValid)
             {
                 foreach (var operation in operations)

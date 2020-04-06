@@ -19,20 +19,20 @@ namespace dipl0611.Models
             SqlCommand cmd;
             var con = new SqlConnection(ConfigurationManager.ConnectionStrings["dipl"].ConnectionString);
             
-            con.Open();
-            string query = @"SELECT kontr.name, prod.name ,(Select(Select SUM(count)
+            con.Open(); //TODO: Проблема: не отображаются остатки если у нового товара есть приход, но нет расхода
+            string query = @"SELECT kontr.name, prod.name ,(Select(Select SUM(count) 
                             From operation as operPrih
                             JOIN TTN as ttnPrih
                             ON operPrih.id_ttn = ttnPrih.id
-                            Where id_product = prod.id and ttnPrih.id_type = 1) -
+                            Where id_product = prod.id and ttnPrih.id_type = 7) -
                             case
                             when
                             (Select SUM(count) From operation as operRash JOIN TTN as ttnRash ON operRash.id_ttn = ttnRash.id
-                            Where id_product = prod.id and ttnRash.id_type = 2) is null then 0
+                            Where id_product = prod.id and ttnRash.id_type = 8) is null then 0
                             else (Select SUM(count) From operation as operRash
                             JOIN TTN as ttnRash
                             ON operRash.id_ttn = ttnRash.id
-                            Where id_product = prod.id and ttnRash.id_type = 2 ) end
+                            Where id_product = prod.id and ttnRash.id_type = 8 ) end
                             ) as остатки
                             FROM dbo.operation as oper
                             Join
@@ -42,9 +42,9 @@ namespace dipl0611.Models
                             ON ttn.id = oper.id_ttn
                             join dbo.kontragents as kontr
                             on ttn.id_kontr = kontr.id
-                            Where kontr.id = 2
+                            Where kontr.type_kontr_id = 2
                             group by kontr.name, prod.id, prod.name";
-            // todo
+
             cmd = new SqlCommand(query, con);
             //помещаем данные из SQL-запроса в переменную reader
             var reader = cmd.ExecuteReader();
@@ -103,25 +103,25 @@ namespace dipl0611.Models
         public static MemoryStream LoadFromDatabaseBorderMin()
         {
             SqlCommand cmd;
-            var con = new SqlConnection(ConfigurationManager.ConnectionStrings["Model"].ConnectionString);
+            var con = new SqlConnection(ConfigurationManager.ConnectionStrings["dipl"].ConnectionString);
 
             con.Open();
-            string query = @"  SELECT kontr.name, prod.name,
+            string query = @"SELECT kontr.name, prod.name,
                             (Select (Select SUM(count)
                             From operation as operPrih
                             JOIN TTN as ttnPrih
                             ON operPrih.id_ttn = ttnPrih.id
-                            Where id_product = prod.id and ttnPrih.id_type = 1 ) -
+                            Where id_product = prod.id and ttnPrih.id_type = 7 ) -
                             case
                             when
                             (Select SUM(count) From operation as operRash
                             JOIN TTN as ttnRash
                             ON operRash.id_ttn = ttnRash.id
-                            Where id_product = prod.id and ttnRash.id_type = 2 ) is null then 0
+                            Where id_product = prod.id and ttnRash.id_type = 8 ) is null then 0
                             else (Select SUM(count) From operation as operRash
                             JOIN TTN as ttnRash
                             ON operRash.id_ttn = ttnRash.id
-                            Where id_product = prod.id and ttnRash.id_type = 2 ) end
+                            Where id_product = prod.id and ttnRash.id_type = 8 ) end
                             ) as остатки, prod.lowBorderOrder
                             FROM dbo.operation as oper
                             Join
@@ -131,21 +131,21 @@ namespace dipl0611.Models
                             ON ttn.id = oper.id_ttn
                             join dbo.kontragents as kontr
                             on ttn.id_kontr = kontr.id
-                            Where ttn.id_kontr <> 3 and (Select (Select SUM(count)
+                            Where kontr.type_kontr_id = 1 and (Select (Select SUM(count)
                             From operation as operPrih
                             JOIN TTN as ttnPrih
                             ON operPrih.id_ttn = ttnPrih.id
-                            Where id_product = prod.id and ttnPrih.id_type = 1 ) -
+                            Where id_product = prod.id and ttnPrih.id_type = 7 ) -
                             case
                             when
                             (Select SUM(count) From operation as operRash
                             JOIN TTN as ttnRash
                             ON operRash.id_ttn = ttnRash.id
-                            Where id_product = prod.id and ttnRash.id_type = 2 ) is null then 0
+                            Where id_product = prod.id and ttnRash.id_type = 8 ) is null then 0
                             else (Select SUM(count) From operation as operRash
                             JOIN TTN as ttnRash
                             ON operRash.id_ttn = ttnRash.id
-                            Where id_product = prod.id and ttnRash.id_type = 2 ) end
+                            Where id_product = prod.id and ttnRash.id_type = 8 ) end
                             ) < lowBorderOrder
                             group by kontr.name, prod.id, prod.name, prod.lowBorderOrder";
             // todo

@@ -27,8 +27,6 @@
         </thead>
         <tbody>
 
-
-
             @for (int i = 0; i < @ViewBag.countRow; i++)
 
             {
@@ -66,29 +64,5 @@
 
 @section scripts
     {
-    @*<script>
-        var myJsVariable = '@ViewBag.idTTN';
-        var clicks = 1;
-        function onClick() {
-            clicks += 1;
-            document.getElementById("clicks").innerHTML = clicks;
-        };
-        $(document).ready(function() {
-            var t = $('#example').DataTable();
 
-            $('#addRow').on('click', function () {
-
-                t.row.add(['<input id="id_product" name="id_product" type="text">', '<input id="count" name="count" type="text">',
-                    '<input id="id_ttn" name="id_ttn" type="hidden" value="">']).node().id = clicks;
-                t.draw(false);
-                var row = document.getElementById(clicks).value;
-                row.getElementsByName("id_ttn").value = myJsVariable;
-            } );
-
-            // Automatically add a first row of data
-            $('#addRow').click();
-        });
-
-
-    </script>*@
 }

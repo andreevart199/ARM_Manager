@@ -24,17 +24,14 @@ namespace dipl0611.Controllers
         public ActionResult addROW()
         {
             int id_kontr = (int) TempData["id_kontr"] ;
+            int idType = (int) TempData["idType"];
             ViewBag.countRow = TempData["countRow"];
             ViewBag.idTTN = TempData["idTTN"].ToString();
-            ViewBag.id_product1 = new SelectList(db.products.Where(x => x.id_kontr == id_kontr), "id", "name");
-            return View();
-        } 
 
-        public ActionResult addROWRash(int? id)
-        {
-            ViewBag.idTTN = id;
-            var operation = db.operation.Where(o => o.id_ttn == id);
-            return View(operation.ToList());
+            ViewBag.id_product1 = idType == 7 // либо 
+                ?  new SelectList(db.products.Where(x => x.id_kontr == id_kontr), "id", "name")
+                :  new SelectList(db.products, "id", "name");
+            return View();
         }
 
         public ActionResult watchTTN(int? id, int? id_kontr)
@@ -68,7 +65,7 @@ namespace dipl0611.Controllers
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreatePrihod([Bind(Include = "id,date,nomer,id_type,id_kontr, countRow")] TTN tTN, int countRow)
+        public ActionResult Create([Bind(Include = "id,date,nomer,id_type,id_kontr, countRow")] TTN tTN, int countRow)
         {
             ViewBag.id_TTN = tTN.id;
             if (ModelState.IsValid)
@@ -78,24 +75,8 @@ namespace dipl0611.Controllers
                 TempData["id_kontr"] = tTN.id_kontr;
                 TempData["countRow"] = countRow;
                 TempData["idTTN"] = tTN.id;
+                TempData["idType"] = tTN.id_type;
                 return RedirectToAction("addROW");
-            }
-            ViewBag.id_kontr = new SelectList(db.kontragents, "id", "name", tTN.id_kontr);
-            ViewBag.id_type = new SelectList(db.type_TTN, "id", "name", tTN.id_type);
-            return View(tTN);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateRashod([Bind(Include = "id,date,nomer,id_type,id_kontr")] TTN tTN)
-        {
-            ViewBag.id_TTN = tTN.id;
-            if (ModelState.IsValid)
-            {
-                db.TTN.Add(tTN);
-                db.SaveChanges();
-                TempData["Message"] = tTN.id_kontr;
-                return RedirectToAction("addROWRash", new { id = tTN.id });
             }
             ViewBag.id_kontr = new SelectList(db.kontragents, "id", "name", tTN.id_kontr);
             ViewBag.id_type = new SelectList(db.type_TTN, "id", "name", tTN.id_type);
