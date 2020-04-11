@@ -22,28 +22,32 @@ namespace dipl0611.Models
             SqlCommand cmd;
             SqlCommand cmd2;
             SqlCommand cmd3;
-            var con = new SqlConnection(ConfigurationManager.ConnectionStrings["dipl"].ConnectionString);
-            
-            con.Open();
+            var con1 = new SqlConnection(ConfigurationManager.ConnectionStrings["dipl"].ConnectionString);
+            var con2 = new SqlConnection(ConfigurationManager.ConnectionStrings["dipl"].ConnectionString);
+            var con3 = new SqlConnection(ConfigurationManager.ConnectionStrings["dipl"].ConnectionString);
+
+            con1.Open();
+            con2.Open();
+            con3.Open();
             //запрос заполнение строк операций
             string query = $@"SELECT ROW_NUMBER() OVER (Order by oper.id) AS RowNumber , prod.name,oper.count, prod.price
-                            FROM diplom.dbo.TTN as ttn
-                            join diplom.dbo.operation as oper
+                            FROM dipl.dbo.TTN as ttn
+                            join dipl.dbo.operation as oper
                             ON ttn.id = oper.id_ttn
-                            join diplom.dbo.products as prod
+                            join dipl.dbo.products as prod
                             ON prod.id = oper.id_product
                             WHERE ttn.id = {id}";
             //запрос заполнение даты и номера
-            string query2 = $@"Select nomer, date FROM diplom.dbo.TTN WHERE ttn.id = {id}";
+            string query2 = $@"Select nomer, date FROM dipl.dbo.TTN WHERE ttn.id = {id}";
             //запрос заполнение поле Поставщик
-            string query3 = $@"Select name, telephone, adress,dogovor FROM diplom.dbo.TTN  as ttn 
-                            join diplom.dbo.kontragents as kontr
+            string query3 = $@"Select name, telephone, adress,dogovor FROM dipl.dbo.TTN  as ttn 
+                            join dipl.dbo.kontragents as kontr
                             on ttn.id_kontr = kontr.id
                             WHERE ttn.id = {id}";
             // todo
-            cmd = new SqlCommand(query, con);
-            cmd2 = new SqlCommand(query2, con);
-            cmd3 = new SqlCommand(query3, con);
+            cmd = new SqlCommand(query, con1);
+            cmd2 = new SqlCommand(query2, con2);
+            cmd3 = new SqlCommand(query3, con3);
             //помещаем данные из SQL-запроса в переменную reader
             var reader = cmd.ExecuteReader();
             var reader2 = cmd2.ExecuteReader();

@@ -17,12 +17,13 @@ namespace dipl0611.Controllers
         // GET: CreateOrder
         public ActionResult Index()
         {
-            var list = db.kontragents.ToList();
+            var list = db.kontragents.Where(x=>x.type_kontr_id == 1).ToList();
             return View(list);
         }
 
         public ActionResult generateOrder(int? id, string date1, string date2)
         {
+
             string s = ConfigurationManager.ConnectionStrings["dipl"].ConnectionString;
 
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["dipl"].ConnectionString))

@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h3>Перечень поставщиков</h3>
+<h3>Перечень контрагентов</h3>
 
 
 <table id="example" class="display" style="width:100%">
@@ -15,19 +15,22 @@
                 Наименование
             </th>
             <th>
-               Телефон
+                Телефон
             </th>
             <th>
                 Адресс
             </th>
             <th>
-               Контактное лицо
+                Контактное лицо
             </th>
             <th>
                 Контактный телефон
             </th>
             <th>
                 Номер договора
+            </th>
+            <th>
+                Тип контрагента
             </th>
             <th></th>
         </tr>
@@ -53,6 +56,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.dogovor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.type_kontr.name_type)
                 </td>
                 <td>
                     @Html.ActionLink("Редактировать", "Edit", new { id = item.id }) 

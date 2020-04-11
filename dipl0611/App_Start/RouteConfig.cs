@@ -16,7 +16,7 @@ namespace dipl0611
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "kontragents", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
