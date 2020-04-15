@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using dipl0611.Models;
 namespace dipl0611.Controllers
 {
@@ -17,6 +18,7 @@ namespace dipl0611.Controllers
         // GET: CreateOrder
         public ActionResult Index()
         {
+
             var list = db.kontragents.Where(x=>x.type_kontr_id == 1).ToList();
             return View(list);
         }
@@ -70,6 +72,9 @@ namespace dipl0611.Controllers
             }
             return View();
         }
+
+       
+
 
 
     }

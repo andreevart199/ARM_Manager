@@ -13,6 +13,7 @@ namespace dipl0611.Models
 {
     public class ExportToExcel 
     {
+        private static Model db = new Model();
         //FIXME перенести в отдельные методы
         public static MemoryStream LoadFromDatabase()
         {
@@ -20,7 +21,7 @@ namespace dipl0611.Models
             var con = new SqlConnection(ConfigurationManager.ConnectionStrings["dipl"].ConnectionString);
             
             con.Open(); //TODO: Проблема: не отображаются остатки если у нового товара есть приход, но нет расхода
-            string query = @"SELECT kontr.name, prod.name ,(Select(Select SUM(count) 
+            string query = @"SELECT prod.name, prod.id_kontr, (Select(Select SUM(count) 
                             From operation as operPrih
                             JOIN TTN as ttnPrih
                             ON operPrih.id_ttn = ttnPrih.id
@@ -41,9 +42,9 @@ namespace dipl0611.Models
                             JOIN dbo.TTN ttn
                             ON ttn.id = oper.id_ttn
                             join dbo.kontragents as kontr
-                            on ttn.id_kontr = kontr.id
-                            Where kontr.type_kontr_id = 2
-                            group by kontr.name, prod.id, prod.name";
+                            on ttn.id_kontr = kontr.id 
+                            Where kontr.type_kontr_id = 2 
+                            group by  prod.id, prod.name, prod.id_kontr";
 
             cmd = new SqlCommand(query, con);
             //помещаем данные из SQL-запроса в переменную reader
@@ -81,12 +82,23 @@ namespace dipl0611.Models
             #endregion 
 
             int rowIndex = 1;
+            string name;
             while (reader.Read())
             {
                 IRow row = workbook.GetSheet("таблица").CreateRow(rowIndex);
                 for (int i = 0; i < reader.FieldCount; i++)
                 {
-                    row.CreateCell(i).SetCellValue(reader[i].ToString());
+                    if (i == 1)
+                    {
+                        int id_kontr = (int) reader[i]; 
+                        name = db.kontragents.Where(x => x.id == id_kontr).Select(x => x.name).FirstOrDefault();
+                        row.CreateCell(i).SetCellValue(name);
+                    }
+                    else
+                    {
+                        row.CreateCell(i).SetCellValue(reader[i].ToString());
+                    }
+
                     row.Cells[i].CellStyle = styleBorder;
                 }
                 rowIndex++;

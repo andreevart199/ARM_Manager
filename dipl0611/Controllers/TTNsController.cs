@@ -21,14 +21,14 @@ namespace dipl0611.Controllers
             var tTN = db.TTN.Include(t => t.kontragents).Include(t => t.type_TTN);
             return View(tTN.ToList());
         }
-        public ActionResult addROW()
+        public ViewResult addROW()
         {
             int id_kontr = (int) TempData["id_kontr"] ;
             int idType = (int) TempData["idType"];
             ViewBag.countRow = TempData["countRow"];
             ViewBag.idTTN = TempData["idTTN"].ToString();
 
-            ViewBag.id_product1 = idType == 7 // либо 
+            ViewBag.id_product1 = idType == 7 
                 ?  new SelectList(db.products.Where(x => x.id_kontr == id_kontr), "id", "name")
                 :  new SelectList(db.products, "id", "name");
             return View();
@@ -46,6 +46,7 @@ namespace dipl0611.Controllers
         // GET: TTNs/Create
         public ActionResult CreatePrihod()
         {
+           
             ViewBag.id_kontr = new SelectList(db.kontragents.Where(x=> x.type_kontr_id==1), "id", "name");
             ViewBag.id_type = new SelectList(db.type_TTN, "id", "name");
             return View();
@@ -54,6 +55,7 @@ namespace dipl0611.Controllers
         // GET: TTNs/Create
         public ActionResult CreateRashod()
         {
+            
             ViewBag.id_kontr = new SelectList(db.kontragents.Where(x => x.type_kontr_id==2), "id", "name");
             ViewBag.id_type = new SelectList(db.type_TTN, "id", "name");
             return View();
