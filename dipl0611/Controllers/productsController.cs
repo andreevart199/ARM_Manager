@@ -21,20 +21,6 @@ namespace dipl0611.Controllers
             return View(products.ToList());
         }
 
-        // GET: products/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            products products = db.products.Find(id);
-            if (products == null)
-            {
-                return HttpNotFound();
-            }
-            return View(products);
-        }
 
         // GET: products/Create
         public ActionResult Create()
@@ -92,20 +78,6 @@ namespace dipl0611.Controllers
             return View(products);
         }
 
-        // GET: products/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            products products = db.products.Find(id);
-            if (products == null)
-            {
-                return HttpNotFound();
-            }
-            return View(products);
-        }
 
         // POST: products/Delete/5
         [HttpPost, ActionName("Delete")]

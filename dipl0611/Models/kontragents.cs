@@ -42,9 +42,9 @@ namespace dipl0611.Models
         public virtual type_kontr type_kontr { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<products> products { get; set; }
+        public ICollection<products> products { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TTN> TTN { get; set; }
+        public ICollection<TTN> TTN { get; set; }
     }
 }

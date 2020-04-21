@@ -47,20 +47,6 @@ namespace dipl0611.Controllers
             return RedirectToAction("Index", "kontragents"); ;
         }
 
-        // GET: products/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            operation operation = db.operation.Find(id);
-            if (operation == null)
-            {
-                return HttpNotFound();
-            }
-            return View(operation);
-        }
    
         // POST: products/Delete/5
         [HttpPost, ActionName("Delete")]

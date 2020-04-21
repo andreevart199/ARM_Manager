@@ -17,23 +17,14 @@ namespace dipl0611.Controllers
         // GET: kontragents
         public ActionResult Index()
         {
+            //Model model = new Model();
+            //var context = model.kontragents.AsEnumerable();
+
             return View(db.kontragents.ToList());
+
+            
         }
 
-        // GET: kontragents/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            kontragents kontragents = db.kontragents.Find(id);
-            if (kontragents == null)
-            {
-                return HttpNotFound();
-            }
-            return View(kontragents);
-        }
 
         // GET: kontragents/Create
         public ActionResult Create()
